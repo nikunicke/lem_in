@@ -1,25 +1,41 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
+#    Updated: 2020/10/06 16:25:28 by npimenof         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = lem-in
 
 FLAGS = -Wall -Werror -Wextra
 
-SRC = src/main.c
+SRC = src/main.c src/lem_in.c\
+		src/parse/test.c
 
 INCL = ./includes
 
 LIBFT = ./libft
 FT_HASH = ./ft_hash
 FT_GRAPH = ./ft_graph
-LIBFT_INCL = LIBFT/includes
-FT_HASH_INCL = FT_HASH/includes
-FT_GRAPH_INCL = FT_GRAPH/includes
+LIBFT_INCL = $(LIBFT)/includes
+FT_HASH_INCL = $(FT_HASH)/includes
+FT_GRAPH_INCL = $(FT_GRAPH)/includes
 
 all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) $(INCL)/lem_in.h
 	make -C $(LIBFT)
 	make -C $(FT_HASH)
 	make -C $(FT_GRAPH)
-	gcc $(FlAGS) -o $(NAME) $(SRC) -L./libft -lft -I$(LIBFT_INCL)
+	gcc $(FlAGS) -o $(NAME) $(SRC) -I$(INCL) \
+	-L$(LIBFT) -lft -I$(LIBFT_INCL) \
+	-L$(FT_HASH) -lhashft -I$(FT_HASH_INCL) \
+	-L$(FT_GRAPH) -lgraph -I$(FT_GRAPH_INCL) \
 
 clean:
 	make clean -C $(LIBFT)
