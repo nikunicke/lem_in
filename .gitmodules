@@ -1,0 +1,9 @@
+[submodule "ft_hash"]
+	path = ft_hash
+	url = https://github.com/nikunicke/ft_hash.git
+[submodule "ft_graph"]
+	path = ft_graph
+	url = https://github.com/nikunicke/ft_graph.git
+[submodule "libft"]
+	path = libft
+	url = https://github.com/nikunicke/libft.git
