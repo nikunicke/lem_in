@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 13:56:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/08 16:56:35 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:12:37 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ t_lexer		*init_lexer(char *content, size_t s)
 	lex->i = 0;
 	lex->ch = content;
 	return (lex);
+}
+
+void		update_lexer(t_lexer *l, char *content, size_t s)
+{
+	l->s = s;
+	l->ch = content;
+	l->i = 0;
 }
 
 // t_lexer		*new_lexer(char *content, size_t s)
@@ -65,7 +72,7 @@ t_token		*lex_get_next_token(t_lexer *l)
 			return (lex_ident(l));
 		return (init_token(ILLEGAL, l->ch, 0));
 	}
-	return (NULL);
+	return (init_token(NWL, 0, 0));
 }
 
 t_token		*lex_advance_token(t_lexer *l, t_token *t)
@@ -79,6 +86,10 @@ t_token		*lex_ident(t_lexer *l)
 	char	*id;
 
 	id = l->ch;
+	while (ft_isdigit(*(l->ch)))
+		lex_advance(l);
+	if (*(l->ch) == 0 || *(l->ch) == ' ')
+		return (init_token(NUM, id, 0));
 	while (ft_isalnum(*(l->ch)))
 		lex_advance(l);
 	if (*(l->ch) == ' ')

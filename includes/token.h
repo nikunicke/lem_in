@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:20:38 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/08 16:51:39 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/09 16:03:20 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef enum	e_type
 {
-	EOF,
+	NWL,
 	ILLEGAL,
 	IDENT,
 	NUM,
