@@ -6,7 +6,7 @@
 #    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
-#    Updated: 2020/10/08 16:03:53 by npimenof         ###   ########.fr        #
+#    Updated: 2020/10/09 11:50:44 by npimenof         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FLAGS = -Wall -Werror -Wextra
 
 SRC = src/main.c src/lem_in.c\
 		src/parse/test.c src/parse/lexer.c\
-		src/parse/token.c
+		src/parse/token.c src/parse/parser.c\
 
 INCL = ./includes
 
