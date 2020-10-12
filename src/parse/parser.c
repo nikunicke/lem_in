@@ -6,12 +6,37 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:50:08 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/09 16:36:37 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:56:31 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "libft.h"
 #include <stdio.h>
+#define RED "\033[0;31m"
+#define YELLOW "\033[0;33m"
+#define GREEN "\033[0;32m"
+#define RESET "\033[0m"
+
+static char *type_literals[6] = {
+	"END OF LINE",
+	"ILLEGAL",
+	"IDENTIFIER",
+	"NUMBER",
+	"COMMAND",
+	"HYPHEN"
+};
+
+t_node	*ft_unique_node(t_list *l, void *ptr, size_t s)
+{
+	while (l)
+	{
+		if (!(ft_memcmp(((t_node *)(l->content))->id, ptr, s)))
+			return (l->content);
+		l = l->next;
+	}
+	return (NULL);
+} // this should not be here
 
 t_parser		*init_parser(t_lexer *l)
 {
@@ -36,62 +61,111 @@ void			parser_consume(t_parser *p, t_type type)
 	else
 	{
 		printf(
-		"Error: Unexpected token '%s', with type %d\n",
+		RED "Error" RESET ": Unexpected token '%s', with type" RED " %s" RESET ". Expected type" GREEN " %s\n" RESET,
 		p->current_token->lit,
-		p->current_token->type);
+		type_literals[p->current_token->type],
+		type_literals[type]);
 		exit(1);
+		// change to putstr or smthn...
 	}
 }
 
-int			parse_hash(t_parser *p)
-{
-	if (p->current_token->type == HASH)
-	{
-		parser_consume(p, HASH);
-		parser_consume(p, NWL);
-		return (1);
-	}
-	return (0);
-}
 
 int				parse_ants(t_parser *p, t_stage *s)
 {
+	int		n;
 	parser_consume(p, NUM);
+	n = ft_atoi(p->prev_token->lit);
 	parser_consume(p, NWL);
 	(*s)++;
-	return (0);
+	return (n);
 }
 
-void			parse_node(t_parser *p, t_stage *s)
+t_node			*parse_node(t_parser *p, t_stage *s)
 {
-	parser_consume(p, IDENT);
+	t_node	*n;
+	
+	if (p->current_token->type == NUM)
+		parser_consume(p, NUM);
+	else
+		parser_consume(p, IDENT);
+	n = new_node(p->prev_token->lit);
 	if (p->current_token->type == HYPH)
 	{
 		parser_consume(p, HYPH);
-		parser_consume(p, IDENT);
-		return;
+		if (p->current_token->type == NUM)
+			parser_consume(p, NUM);
+		else
+			parser_consume(p, IDENT);
+		parser_consume(p, NWL);
+		(*s)++;
+		return (NULL);
 	}
 	parser_consume(p, NUM);
+	n->x = ft_atoi(p->prev_token->lit);
 	parser_consume(p, NUM);
-	// parser_consume(p, NWL);
+	n->y = ft_atoi(p->prev_token->lit);
+	parser_consume(p, NWL);
+	return (n);
 }
 
-void			parser_parse(t_parser *p)
+void			parse_edge(t_parser *p, t_graph *g, t_hash *t)
+{
+	t_node	*s;
+	t_node	*d;
+	size_t	i;
+
+	if (p->current_token->type == NUM)
+		parser_consume(p, NUM);
+	else
+		parser_consume(p, IDENT);
+	i = ft_hash(p->prev_token->lit, p->prev_token->size);
+	s = ft_unique_node((t_list *)t->arr[i], p->prev_token->lit, p->prev_token->size);
+	parser_consume(p, HYPH);
+	if (p->current_token->type == NUM)
+		parser_consume(p, NUM);
+	else
+		parser_consume(p, IDENT);
+	i = ft_hash(p->prev_token->lit, p->prev_token->size);
+	d = ft_unique_node((t_list *)t->arr[i], p->prev_token->lit, p->prev_token->size);
+	add_edge(g, s, d);
+	parser_consume(p, NWL);
+}
+
+t_command		parse_hash(t_parser *p, t_stage *s)
+{
+	parser_consume(p, COMMAND);
+	if (ft_strcmp(p->prev_token->lit, "##start"))
+		return (START);
+	else if (ft_strcmp(p->prev_token->lit, "##end"))
+		return (END);
+	return (UNDEFINED);
+}
+
+void			parser_parse(t_parser *p, t_lem_in *data)
 {
 	static t_stage		stage;
 	static t_command	start;
 	static t_command	end;
+	t_command			tmp;
 
-	// printf("current: %s  --  %d\n", p->current_token->lit, p->current_token->type);
-	if (parse_hash(p))
+	if (p->current_token->type)
 	{
-		return ;
-	}
-	if (stage == ANTS)
-		parse_ants(p, &stage);
-	else if (stage == NODE)
-		parse_node(p, &stage);
-	else if (stage == EDGE){	
-		printf("current: %s  --  %d\n", p->current_token->lit, p->current_token->type);
+		if (p->current_token->type == COMMAND)
+		{
+			tmp = parse_hash(p, &stage);
+			if (!start && tmp == START)
+				start++;
+			else if (!end && tmp == END)
+				end++;
+			else
+				exit(1);
+		}
+		else if (stage == ANTS)
+			data->ants = parse_ants(p, &stage);
+		else if (stage == NODE)
+			ft_insert(data->h, parse_node(p, &stage), sizeof(t_node));
+		else if (stage == EDGE)
+			parse_edge(p, data->g, data->h);
 	}
 }

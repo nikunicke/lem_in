@@ -6,14 +6,14 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:24:37 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/08 16:50:54 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:48:14 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "token.h"
 
-t_token		*init_token(t_type type, char *lit, char ope)
+t_token		*init_token(t_type type, char *lit, char ope, size_t size)
 {
 	t_token	*t;
 
@@ -22,5 +22,6 @@ t_token		*init_token(t_type type, char *lit, char ope)
 	t->type = type;
 	t->lit = lit;
 	t->ope = ope;
+	t->size = size;
 	return (t);
 }

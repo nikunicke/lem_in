@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 13:56:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/09 16:12:37 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/12 15:49:20 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ void		lex_skip_wsp(t_lexer *l)
 		lex_advance(l);
 }
 
+void		lex_skip_comment(t_lexer *l)
+{
+	while (*(l->ch))
+		lex_advance(l);
+}
+
 void		lex_skip_zero(t_lexer *l)
 {
 	if (l->i < l->s && *(l->ch) == 0)
@@ -65,14 +71,19 @@ t_token		*lex_get_next_token(t_lexer *l)
 	{
 		lex_skip_wsp(l);
 		if (*(l->ch) == '#')
-			return (lex_hash(l));
+		{
+			if (*(l->ch + 1) == '#')
+				return (lex_hash(l));
+			else
+				lex_skip_comment(l);
+		}
 		else if (*(l->ch) == '-')
-			return (lex_advance_token(l, init_token(HYPH, NULL, *(l->ch))));
+			return (lex_advance_token(l, init_token(HYPH, NULL, *(l->ch), 1)));
 		else if (ft_isalnum(*(l->ch)))
 			return (lex_ident(l));
-		return (init_token(ILLEGAL, l->ch, 0));
+		return (init_token(NWL, 0, 0, 0));
 	}
-	return (init_token(NWL, 0, 0));
+	return (init_token(NWL, 0, 0, 0));
 }
 
 t_token		*lex_advance_token(t_lexer *l, t_token *t)
@@ -84,28 +95,32 @@ t_token		*lex_advance_token(t_lexer *l, t_token *t)
 t_token		*lex_ident(t_lexer *l)
 {
 	char	*id;
+	size_t	i;
 
+	i = 0;
 	id = l->ch;
-	while (ft_isdigit(*(l->ch)))
+	while (ft_isdigit(*(l->ch)) && ++i)
 		lex_advance(l);
 	if (*(l->ch) == 0 || *(l->ch) == ' ')
-		return (init_token(NUM, id, 0));
-	while (ft_isalnum(*(l->ch)))
+		return (init_token(NUM, id, 0, i));
+	while (ft_isalnum(*(l->ch)) && ++i)
 		lex_advance(l);
 	if (*(l->ch) == ' ')
 	{
 		*(l->ch) = 0;
 		lex_advance(l);
 	}
-	return (init_token(IDENT, id, 0));
+	return (init_token(IDENT, id, 0, i));
 }
 
 t_token		*lex_hash(t_lexer *l)
 {
 	char	*lit;
+	size_t	i;
 
+	i = 0;
 	lit = l->ch;
-	while (l->i < l->s)
+	while (l->i < l->s && ++i)
 		lex_advance(l);
-	return (init_token(HASH, lit, 0));
+	return (init_token(COMMAND, lit, 0, i));
 }
