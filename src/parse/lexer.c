@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 13:56:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/12 15:49:20 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/13 15:28:54 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,12 @@ t_token		*lex_ident(t_lexer *l)
 	while (ft_isdigit(*(l->ch)) && ++i)
 		lex_advance(l);
 	if (*(l->ch) == 0 || *(l->ch) == ' ')
+	{
+		*(l->ch) = 0;
+		lex_advance(l);
 		return (init_token(NUM, id, 0, i));
-	while (ft_isalnum(*(l->ch)) && ++i)
+	}
+	while (!ft_iswhitespace(*(l->ch)) && *(l->ch) != '-' && l->i < l->s && ++i)
 		lex_advance(l);
 	if (*(l->ch) == ' ')
 	{
