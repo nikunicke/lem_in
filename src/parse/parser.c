@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:50:08 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/13 17:27:45 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/14 17:32:45 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
-static char *type_literals[6] = {
+static char	*g_type_literals[6] = {
 	"END OF LINE",
 	"ILLEGAL",
 	"IDENTIFIER",
@@ -27,7 +27,7 @@ static char *type_literals[6] = {
 	"HYPHEN"
 };
 
-t_node	*ft_unique_node(t_list *l, void *ptr, size_t s)
+t_node		*ft_unique_node(t_list *l, void *ptr, size_t s)
 {
 	while (l)
 	{
@@ -36,9 +36,9 @@ t_node	*ft_unique_node(t_list *l, void *ptr, size_t s)
 		l = l->next;
 	}
 	return (NULL);
-} // this should not be here
+}
 
-t_parser		*init_parser(t_lexer *l)
+t_parser	*init_parser(t_lexer *l)
 {
 	t_parser	*p;
 
@@ -51,7 +51,7 @@ t_parser		*init_parser(t_lexer *l)
 	return (p);
 }
 
-void			parser_consume(t_parser *p, t_type type)
+void		parser_consume(t_parser *p, t_type type)
 {
 	if (p->current_token->type == type)
 	{
@@ -63,17 +63,16 @@ void			parser_consume(t_parser *p, t_type type)
 		printf(
 		RED "Error" RESET ": Unexpected token '%s', with type" RED " %s" RESET ". Expected type" GREEN " %s\n" RESET,
 		p->current_token->lit,
-		type_literals[p->current_token->type],
-		type_literals[type]);
+		g_type_literals[p->current_token->type],
+		g_type_literals[type]);
 		exit(1);
-		// change to putstr or smthn...
 	}
 }
 
-
-int				parse_ants(t_parser *p, t_stage *s)
+int			parse_ants(t_parser *p, t_stage *s)
 {
 	int		n;
+
 	parser_consume(p, NUM);
 	n = ft_atoi(p->prev_token->lit);
 	parser_consume(p, NWL);
@@ -81,7 +80,7 @@ int				parse_ants(t_parser *p, t_stage *s)
 	return (n);
 }
 
-void			edge_helper(t_parser *p, t_graph *g, t_hash *t)
+void		edge_helper(t_parser *p, t_graph *g, t_hash *t)
 {
 	t_node	*s;
 	t_node	*d;
@@ -100,10 +99,10 @@ void			edge_helper(t_parser *p, t_graph *g, t_hash *t)
 	parser_consume(p, NWL);
 }
 
-t_node			*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
+t_node		*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
 {
 	t_node	*n;
-	
+
 	if (p->current_token->type == NUM)
 		parser_consume(p, NUM);
 	else
@@ -124,7 +123,7 @@ t_node			*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
 	return (n);
 }
 
-void			parse_edge(t_parser *p, t_graph *g, t_hash *t)
+void		parse_edge(t_parser *p, t_graph *g, t_hash *t)
 {
 	t_node	*s;
 	t_node	*d;
@@ -137,7 +136,7 @@ void			parse_edge(t_parser *p, t_graph *g, t_hash *t)
 	edge_helper(p, g, t);
 }
 
-t_command		parse_hash(t_parser *p, t_stage *s)
+t_command	parse_hash(t_parser *p, t_stage *s)
 {
 	parser_consume(p, COMMAND);
 	if (!ft_strcmp(p->prev_token->lit, "##start"))
@@ -147,7 +146,7 @@ t_command		parse_hash(t_parser *p, t_stage *s)
 	return (UNDEFINED);
 }
 
-t_graph			*parser_parse(t_parser *p, t_lem_in *data)
+t_graph		*parser_parse(t_parser *p, t_lem_in *data)
 {
 	static t_stage		stage;
 	static t_command	start;

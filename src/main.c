@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/13 17:28:48 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/14 17:32:32 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		main(void)
 	data.h = init_hash_table(sizeof(t_list), ft_hash2);
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
-		printf("%s\n", line);
+		// printf("%s\n", line);
 		l = init_lexer(line, s);
 		p = init_parser(l);
 		data.g = parser_parse(p, &data);
@@ -72,6 +72,7 @@ int		main(void)
 	printf("end-ID: %s\n", send->id);
 	// ft_map(data.h, print_node);
 	// printf("hash_used: %zu == %zu :graph_size\n", ((t_hash *)data.g)->used, ((t_graph *)data.g)->vertices);
+	// system("leaks lem-in");
 	return (0);
 }
 	// printf("g size: %zu\n", ((t_graph *)data.g)->vertices);

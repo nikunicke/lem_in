@@ -6,38 +6,19 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/13 17:06:23 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/14 17:32:53 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-
-// typedef struct		s_token
-// {
-// 	int				id;
-// 	char			*lit;
-// }					t_token;
-
-// typedef enum		e_ctg
-// {
-// 	ANT,
-// 	NODE,
-// 	EDGE
-// }					t_ctg;
-
-// typedef enum		e_command
-// {
-// 	ILLEGAL,
-// 	COMMENT,
-// 	START,
-// 	END
-// }					t_command;
+# include "ft_hash.h"
+# include "graph.h"
 
 typedef struct		s_lem_in
 {
-	void			*h;
-	void			*g;
+	t_hash			*h;
+	t_graph			*g;
 	unsigned int	start;
 	unsigned int	end;
 	unsigned int	ants;
