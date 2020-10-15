@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 13:56:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/14 13:36:44 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:52:56 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ t_lexer		*init_lexer(char *content, size_t s)
 	lex->i = 0;
 	lex->ch = content;
 	return (lex);
+}
+
+t_lexer		*new_lexer(char *content, size_t s)
+{
+	return (&(t_lexer){
+		.ch = content,
+		.s = s,
+		.i = 0
+	});
 }
 
 void		update_lexer(t_lexer *l, char *content, size_t s)

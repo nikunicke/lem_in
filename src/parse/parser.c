@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:50:08 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/14 17:32:45 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:47:34 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ t_node		*ft_unique_node(t_list *l, void *ptr, size_t s)
 		l = l->next;
 	}
 	return (NULL);
+}
+
+t_parser	*new_parser(t_lexer *l)
+{
+	t_token	*t;
+
+	t = lex_get_next_token(l);
+	return (&(t_parser){.stage = 0,
+						.lex = l,
+						.current_token = t,
+						.prev_token = t});
 }
 
 t_parser	*init_parser(t_lexer *l)

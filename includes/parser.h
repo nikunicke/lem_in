@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:46:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/13 14:49:53 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/15 12:48:06 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_parser
 }				t_parser;
 
 t_parser		*init_parser(t_lexer *l);
+t_parser		*new_parser(t_lexer *l);
 void			parser_consume(t_parser *p, t_type type);
 t_graph			*parser_parse(t_parser *p, t_lem_in *data);
 #endif

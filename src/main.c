@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/14 17:32:32 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/15 14:48:49 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,34 @@ size_t	ft_hash2(t_node *n, size_t s)
 	return (h);
 }
 
+// void	parser_free(t_parser **p)
+// {
+// 	free((*p)->current_token);
+// 	free((*p)->prev_token);
+// 	free((*p)->lex);
+// 	free(*p);
+// 	p = NULL;
+// }
+
 int		main(void)
 {
 	t_lem_in	data;
 	char		*line;
 	size_t		s;
-	t_lexer		*l;
-	t_parser	*p;
+	t_lexer		l;
+	t_parser	p;
 
 	data = *init_lem_in();
 	data.h = init_hash_table(sizeof(t_list), ft_hash2);
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
-		// printf("%s\n", line);
-		l = init_lexer(line, s);
-		p = init_parser(l);
-		data.g = parser_parse(p, &data);
+		l = *new_lexer(line, s);
+		p = *new_parser(&l);
+		data.g = parser_parse(&p, &data);
 	}
+	printf("wtf\n");
+	edk(&data);
+	// return (0);
 	printf("\n\n");
 	printf("ants: %u\n", data.ants);
 	printf("start: %u\n", data.start);
@@ -65,7 +76,6 @@ int		main(void)
 	t_node		*snart;
 	t_node		*send;
 	a = (t_adjlist *)data.g;
-	// printf("%p\n", a);
 	snart = ((t_edge *)(a->list[data.start]->content))->from;
 	send = ((t_edge *)(a->list[data.end]->content))->from;
 	printf("start-ID: %s\n", snart->id);
