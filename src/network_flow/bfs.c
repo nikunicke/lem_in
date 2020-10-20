@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/15 16:41:21 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/20 18:14:59 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,65 +23,189 @@ int		equals(t_edge *e, int token)
 	return (e->to->token == token);
 }
 
-void	visit_node(int **list, int node)
+void	visit_node(t_edge *e, int token)
 {
-	(*list)[node] = 1;
+	e->to->token = token;
 }
 
-int		bfs_internal(t_adjlist *graph, int start, int end, int token)
+void	augment(t_edge *e)
+{
+	e->flow += 1;
+	e->residual->flow -= 1;
+}
+
+void	augment_path(t_edge **prev, int end)
+{
+	while (prev[end])
+	{
+		augment(prev[end]);
+		end = prev[end]->from->i;
+	}
+}
+
+t_list	*init_queue(void *head)
+{
+	t_list	*q;
+
+	q = NULL;
+	ft_lstadd(&q, ft_lstcontent(head));
+	return (q);
+}
+
+void	*ft_memalloc2(size_t type, size_t s)
+{
+	char	*p;
+
+	if (!(p = malloc(sizeof(type) * s)))
+		return (NULL);
+	ft_bzero(p, sizeof(type) * s);
+	return (p);
+}
+
+int		is_visited(t_node *node, int token)
+{
+	return (node->token == token);
+}
+
+t_list	*check_constraints(t_list *edge, t_edge **prev, int token)
+{
+	t_list	*q_part;
+
+	q_part = NULL;
+	while (edge)
+	{
+		if ((remaining_capacity((t_edge *)edge->content)) > 0 &&
+			!is_visited(((t_edge *)edge->content)->to, token))
+		{
+			ft_lstpush(&q_part, ft_lstcontent(&((t_edge *)edge->content)->to->i));
+			prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
+			visit_node((t_edge *)edge->content, token);
+		}
+		edge = edge->next;
+	}
+	return (q_part);
+}
+
+int		bfs_internal(t_adjlist *graph, t_node *start, t_node *end, int token)
 {
 	t_list	*q_head;
-	t_list	*q_part;
-	t_list	*edge;
-	int		*prev;
-	int		*visit;
+	t_edge	**prev;
 
-	prev = malloc(sizeof(int) * graph->size);
-	visit = malloc(sizeof(int) * graph->size);
-	ft_bzero(prev, graph->size);
-	ft_bzero(visit, graph->size);
-	q_head = NULL;
-	ft_lstadd(&q_head, ft_lstcontent(&start));
-	visit_node(&visit, start);
-	while (q_head)
+	prev = ft_memalloc2(sizeof(t_edge *), graph->size);
+	q_head = init_queue(&start->i);
+	start->token = token;
+	while (q_head && *(int *)q_head->content != end->i)
 	{
-		if (*(int *)q_head->content == end)
-			break ;
-		q_part = NULL;
-		edge = graph->list[(*(int *)q_head->content)];
-		while (edge)
-		{
-			if (remaining_capacity((t_edge *)edge->content) && !visit[((t_edge *)edge->content)->to->i])
-			{
-				ft_lstpush(&q_part, ft_lstcontent(&((t_edge *)edge->content)->to->i));
-				prev[((t_edge *)edge->content)->to->i] = *(int *)q_head->content;
-				visit_node(&visit, ((t_edge *)edge->content)->to->i);
-			}
-			edge = edge->next;
-		}
-		ft_lstpush(&q_head, q_part);
+		ft_lstpush(&q_head, check_constraints(graph->list[(*(int *)q_head->content)], prev, token));
 		q_head = q_head->next;
+		//lstpop here instead of nexting
 	}
-	if (prev[end] == 0)
+	if (!prev[end->i])
 		return (0);
-	int i = end;
-	int j = 1;
-	while ((i = prev[i]))
-		j++;
-	printf("j: %d\n", j);
+	augment_path(prev, end->i);
+	free(prev);
+	prev = NULL;
 	return (1);
 }
 
-int		bfs(t_adjlist *graph, int start, int end, int token)
+void	print_path(t_list *lst)
+{
+	while (lst)
+	{
+		printf("'%s' ", ((t_edge *)lst->content)->from->id);
+		lst = lst->next;
+	}
+	printf("\n");
+}
+
+void	print_paths(t_adjlist *g, t_node *start, t_node *end, int token)
+{
+	t_list	*q_head;
+	t_list	*edge;
+	t_list	*path;
+	t_list	*tmp;
+	int		i;
+
+	ft_lstadd(&path, ft_lstcontent(&start->i));
+	q_head = init_queue(path);
+	while (q_head)
+	{
+		path = q_head->content;
+		if (((t_edge *)path->content)->from->i == end->i)
+			print_path(path);
+		tmp = path;
+		printf("holy fyyk\n");
+		while (tmp)
+		{
+			if (!is_visited(((t_edge *)tmp->content)->to, token) && ((t_edge *)edge->content)->flow == 1)
+			{
+				ft_lstadd(&path, ft_lstcontent(&((t_edge *)tmp->content)->to->i));
+				visit_node((t_edge *)tmp->content, token);
+			}
+			tmp = tmp->next;
+		}
+		ft_lstpush(&q_head, path);
+	}
+	// q_head = init_queue(&start->i);
+	// path = ft_memalloc2(sizeof(t_edge *), g->size);
+	// while (q_head)
+	// {
+	// 	edge = g->list[(*(int *)q_head->content)]; //hmmmmmmmmm
+	// 	i = path[g->size - 1];
+	// 	if (i == end->i)
+	// 		print_path(path);
+		
+
+	// 	while (edge)
+	// 	{
+	// 		if (((t_edge *)edge->content)->flow == 1 && !is_visited(((t_edge *)edge->content)->to, token))
+	// 			ft_lstpush(&q_head, ft_lstcontent(&((t_edge *)edge->content)->to->i));
+	// 		edge = edge->next;
+	// 	}
+	// 	q_head = q_head->next;
+	// }
+	// i = 0;
+	// while (i < g->size)
+	// {
+	// 	printf("Room: '%s'\n", ((t_edge *)g->list[i]->content)->from->id);
+	// 	edge = (t_list *)g->list[i];
+	// 	while (edge)
+	// 	{
+	// 		printf("\tLink: '%s'\tflow: %d\n", ((t_edge *)edge->content)->to->id, ((t_edge *)edge->content)->flow);
+	// 		edge = edge->next;
+	// 	}
+	// 	i++;
+	// }
+
+}
+
+int		bfs(t_lem_in *data, t_node *start, t_node *end)
 {
 	int	bfs;
+	int	i;
+	int	token;
 
-	bfs = bfs_internal(graph, start, end, token);
+	token = 1;
+	i = 0;
+	while (i < data->ants && bfs_internal((t_adjlist *)data->g, start, end, token))
+	{
+		bfs++;
+		token++;
+		i++;
+		print_paths((t_adjlist *)data->g, start, end, token);
+		token++;
+		printf("\n\n");
+	}
 	printf("result: %d\n", bfs);
-	return (0);
+	return (bfs);
 }
 
 void	edk(t_lem_in *data)
 {
-	bfs((t_adjlist *)data->g, data->start, data->end, 1);
+	t_node	*start;
+	t_node	*end;
+
+	start = ((t_edge *)((t_adjlist *)data->g)->list[data->start]->content)->from;
+	end = ((t_edge *)((t_adjlist *)data->g)->list[data->end]->content)->from;
+	bfs(data, start, end);
 }
