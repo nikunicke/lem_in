@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/20 18:14:59 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:36:23 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*ft_memalloc2(size_t type, size_t s)
 
 int		is_visited(t_node *node, int token)
 {
-	return (node->token == token);
+	return (node->token >= token);
 }
 
 t_list	*check_constraints(t_list *edge, t_edge **prev, int token)
@@ -77,6 +77,13 @@ t_list	*check_constraints(t_list *edge, t_edge **prev, int token)
 		if ((remaining_capacity((t_edge *)edge->content)) > 0 &&
 			!is_visited(((t_edge *)edge->content)->to, token))
 		{
+			if (((t_edge *)edge->content)->flow < 0)
+			{
+				q_part = ft_lstcontent(&((t_edge *)edge->content)->to->i);
+				prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
+				visit_node((t_edge *)edge->content, token);
+				break ;
+			}
 			ft_lstpush(&q_part, ft_lstcontent(&((t_edge *)edge->content)->to->i));
 			prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
 			visit_node((t_edge *)edge->content, token);
@@ -110,6 +117,7 @@ int		bfs_internal(t_adjlist *graph, t_node *start, t_node *end, int token)
 
 void	print_path(t_list *lst)
 {
+	printf("%zu -- ", lst->content_size);
 	while (lst)
 	{
 		printf("'%s' ", ((t_edge *)lst->content)->from->id);
@@ -123,60 +131,31 @@ void	print_paths(t_adjlist *g, t_node *start, t_node *end, int token)
 	t_list	*q_head;
 	t_list	*edge;
 	t_list	*path;
-	t_list	*tmp;
-	int		i;
+	t_list	*newpath;
 
-	ft_lstadd(&path, ft_lstcontent(&start->i));
+	path = ft_lstcontent(g->list[start->i]->content);
 	q_head = init_queue(path);
 	while (q_head)
 	{
 		path = q_head->content;
 		if (((t_edge *)path->content)->from->i == end->i)
 			print_path(path);
-		tmp = path;
-		printf("holy fyyk\n");
-		while (tmp)
+		edge = g->list[((t_edge *)path->content)->from->i];
+		while (edge)
 		{
-			if (!is_visited(((t_edge *)tmp->content)->to, token) && ((t_edge *)edge->content)->flow == 1)
+			if (!is_visited(((t_edge *)edge->content)->to, token) && ((t_edge *)edge->content)->flow == 1)
 			{
-				ft_lstadd(&path, ft_lstcontent(&((t_edge *)tmp->content)->to->i));
-				visit_node((t_edge *)tmp->content, token);
+				newpath = ft_lstclone(path, sizeof(t_edge *));
+				ft_lstadd(&newpath, ft_lstcontent(g->list[((t_edge *)edge->content)->to->i]->content));
+				newpath->content_size = path->content_size + 1;
+				ft_lstpush(&q_head, ft_lstcontent(newpath));
+				if (((t_edge *)edge->content)->to->i != end->i)
+					visit_node((t_edge *)edge->content, token);
 			}
-			tmp = tmp->next;
+			edge = edge->next;
 		}
-		ft_lstpush(&q_head, path);
+		q_head = q_head->next;
 	}
-	// q_head = init_queue(&start->i);
-	// path = ft_memalloc2(sizeof(t_edge *), g->size);
-	// while (q_head)
-	// {
-	// 	edge = g->list[(*(int *)q_head->content)]; //hmmmmmmmmm
-	// 	i = path[g->size - 1];
-	// 	if (i == end->i)
-	// 		print_path(path);
-		
-
-	// 	while (edge)
-	// 	{
-	// 		if (((t_edge *)edge->content)->flow == 1 && !is_visited(((t_edge *)edge->content)->to, token))
-	// 			ft_lstpush(&q_head, ft_lstcontent(&((t_edge *)edge->content)->to->i));
-	// 		edge = edge->next;
-	// 	}
-	// 	q_head = q_head->next;
-	// }
-	// i = 0;
-	// while (i < g->size)
-	// {
-	// 	printf("Room: '%s'\n", ((t_edge *)g->list[i]->content)->from->id);
-	// 	edge = (t_list *)g->list[i];
-	// 	while (edge)
-	// 	{
-	// 		printf("\tLink: '%s'\tflow: %d\n", ((t_edge *)edge->content)->to->id, ((t_edge *)edge->content)->flow);
-	// 		edge = edge->next;
-	// 	}
-	// 	i++;
-	// }
-
 }
 
 int		bfs(t_lem_in *data, t_node *start, t_node *end)
@@ -187,6 +166,7 @@ int		bfs(t_lem_in *data, t_node *start, t_node *end)
 
 	token = 1;
 	i = 0;
+	bfs = 0;
 	while (i < data->ants && bfs_internal((t_adjlist *)data->g, start, end, token))
 	{
 		bfs++;

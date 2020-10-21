@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/15 14:48:49 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:37:29 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int		main(void)
 	data.h = init_hash_table(sizeof(t_list), ft_hash2);
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
+		// ft_putendl(line);
 		l = *new_lexer(line, s);
 		p = *new_parser(&l);
 		data.g = parser_parse(&p, &data);
 	}
-	printf("wtf\n");
 	edk(&data);
 	// return (0);
 	printf("\n\n");
