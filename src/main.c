@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/21 16:37:29 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/21 16:38:48 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@ size_t	ft_hash2(t_node *n, size_t s)
 	}
 	return (h);
 }
-
-// void	parser_free(t_parser **p)
-// {
-// 	free((*p)->current_token);
-// 	free((*p)->prev_token);
-// 	free((*p)->lex);
-// 	free(*p);
-// 	p = NULL;
-// }
 
 int		main(void)
 {

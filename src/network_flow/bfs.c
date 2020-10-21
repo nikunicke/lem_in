@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/21 16:36:23 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/21 17:29:30 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_list	*check_constraints(t_list *edge, t_edge **prev, int token)
 		{
 			if (((t_edge *)edge->content)->flow < 0)
 			{
-				q_part = ft_lstcontent(&((t_edge *)edge->content)->to->i);
+				q_part = ft_lstcontent(&((t_edge *)edge->content)->to->i); // leek
 				prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
 				visit_node((t_edge *)edge->content, token);
 				break ;
@@ -126,20 +126,27 @@ void	print_path(t_list *lst)
 	printf("\n");
 }
 
-void	print_paths(t_adjlist *g, t_node *start, t_node *end, int token)
+t_list	**print_paths(t_adjlist *g, t_node *start, t_node *end, int token)
 {
 	t_list	*q_head;
 	t_list	*edge;
 	t_list	*path;
 	t_list	*newpath;
+	t_list	**collection;
+	int		i;
 
+	i = 0;
+	collection = ft_memalloc2(sizeof(t_list *), token / 2);
 	path = ft_lstcontent(g->list[start->i]->content);
 	q_head = init_queue(path);
 	while (q_head)
 	{
 		path = q_head->content;
 		if (((t_edge *)path->content)->from->i == end->i)
-			print_path(path);
+		{
+			collection[i] = path;
+			i++;
+		}
 		edge = g->list[((t_edge *)path->content)->from->i];
 		while (edge)
 		{
@@ -156,27 +163,31 @@ void	print_paths(t_adjlist *g, t_node *start, t_node *end, int token)
 		}
 		q_head = q_head->next;
 	}
+	return (collection);
 }
 
 int		bfs(t_lem_in *data, t_node *start, t_node *end)
 {
-	int	bfs;
-	int	i;
-	int	token;
+	int		bfs;
+	int		i;
+	int		token;
+	t_list	***paths;
 
+	if (!(paths = (t_list ***)ft_memalloc2(sizeof(t_list **), data->ants + 1)))
+		return (0);
 	token = 1;
 	i = 0;
 	bfs = 0;
 	while (i < data->ants && bfs_internal((t_adjlist *)data->g, start, end, token))
 	{
-		bfs++;
 		token++;
+		paths[bfs] = print_paths((t_adjlist *)data->g, start, end, token);
+		bfs++;
 		i++;
-		print_paths((t_adjlist *)data->g, start, end, token);
 		token++;
 		printf("\n\n");
 	}
-	printf("result: %d\n", bfs);
+	print_path(paths[0][0]);
 	return (bfs);
 }
 
