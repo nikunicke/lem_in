@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/21 16:38:48 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/29 16:09:51 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		main(void)
 	size_t		s;
 	t_lexer		l;
 	t_parser	p;
+	t_list		***paths;
 
 	data = *init_lem_in();
 	data.h = init_hash_table(sizeof(t_list), ft_hash2);
@@ -56,7 +57,17 @@ int		main(void)
 		p = *new_parser(&l);
 		data.g = parser_parse(&p, &data);
 	}
-	edk(&data);
+	paths = edk(&data);
+	float	cost;
+	int		flow = min_cost_index(&data, paths);
+	cost = get_cost(data.ants, flow + 1, paths[flow]);
+	output_movement(paths[flow], flow + 1, data.ants);
+	// printf("flow: %d\n", flow + 1);
+	// printf("cost: %f\n", cost);
+	// printf("len of path0: %zu\n", paths[flow][0]->content_size);
+	// printf("len of path1: %zu\n", paths[flow][1]->content_size);
+	// printf("ants on path1: %lu\n", (int)cost - paths[flow][1]->content_size + 1);
+	// printf("ants on path0: %lu\n", (int)cost - paths[flow][0]->content_size + 1);
 	// return (0);
 	printf("\n\n");
 	printf("ants: %u\n", data.ants);
