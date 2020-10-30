@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/29 16:32:31 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/10/30 10:47:34 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,11 @@ void	augment(t_edge *e)
 
 void	augment_path(t_edge **prev, int end)
 {
-	// int	e;
-
-	// e = end;
 	while (prev[end])
 	{
 		augment(prev[end]);
 		end = prev[end]->from->i;
 	}
-	// prev[end]->to->in = 0;
 }
 
 t_list	*init_queue(void *head)
@@ -78,8 +74,6 @@ int		is_in(t_node *node, t_edge *e)
 
 int		check_prio(t_list *edge, int token, int remaining_cap)
 {
-	// printf("WHAT THE FK?\n");
-	// printf("\t\t\t\t%p\n", edge);
 	int	limit;
 
 	limit = 1;
@@ -87,7 +81,6 @@ int		check_prio(t_list *edge, int token, int remaining_cap)
 		limit = 0;
 	while (edge)
 	{
-		// printf("edge: '%s' --> '%s'\n", ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
 		if ((remaining_capacity((t_edge *)edge->content)) > limit &&
 			!is_visited(((t_edge *)edge->content)->to, token))
 		{
@@ -107,55 +100,20 @@ t_list	*check_constraints(t_adjlist *g, t_list *edge, t_edge **prev, int token)
 
 	q_part = NULL;
 	prio = 0;
-	// lim = ((t_edge *)edge->content)->from->in;
 	lim = 0;
 	if (prev[((t_edge *)edge->content)->from->i])
 		lim = is_in(((t_edge *)edge->content)->from, prev[((t_edge *)edge->content)->from->i]);
-		// lim = prev[((t_edge *)edge->content)->from->i]->flow;
-	// printf("\tlim: %d\n", lim);
 	while (edge)
 	{
-		// printf("'%s' --> '%s'\n", ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
-		// printf("\tin: %d\n", ((t_edge *)edge->content)->to->in);
-		// prio = is_in(((t_edge *)edge->content)->to, prev[((t_edge *)edge->content)->from->i]); !!!!!!!!!!!!!
 		prio = is_in(((t_edge *)edge->content)->to, ((t_edge *)edge->content));
-		// if (!prio)
-		// 	lim = 1;
-		// printf("\tprio: %d\n", prio);
-		// printf("--> '%s'\n", ((t_edge *)edge->content)->to->id);
-		// 	q_part = NULL;
-		// 	if (!is_visited(((t_edge *)edge->content)->to, token))
-		// 	{
-		// 		q_part = ft_lstcontent(&((t_edge *)edge->content)->to->i); // leek
-		// 		prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
-		// 		visit_node((t_edge *)edge->content, token);
-		// 	}
-		// 	break ;
-		// }
-		// !is_in(((t_edge *)edge->content)->to, ((t_edge *)edge->content)->flow)
 		if ((rcap = remaining_capacity((t_edge *)edge->content)) > lim &&
 			!is_visited(((t_edge *)edge->content)->to, token))
 		{
-			// printf("\tadding edge: '%s' --> '%s'\n", ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
-			// if (((t_edge *)edge->content)->flow < 0)
-			// {
-			// 	q_part = ft_lstcontent(&((t_edge *)edge->content)->to->i); // leek
-			// 	prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
-			// 	visit_node((t_edge *)edge->content, token);
-			// 	break ;
-			// }
-			// instead of the following trickery in check_prio, we could change the functionality
-			// the visited token, by separating the visited state depending on if we use a residual edge
-			// or not. However, the residuals we use right now, are sort of fake, they also work as normal
-			// edges... now focus on the output...
 			if (prio == 1 && !check_prio(g->list[((t_edge *)edge->content)->to->i], token, rcap))
 			{
-				// printf("\tdiscarding: %s\n", (((t_edge *)edge->content)->to->id));
 				edge = edge->next;
-			// visit_node((t_edge *)edge->content, token);
 				continue ;
 			}
-			// printf("\tprio: %d\tadding edge: '%s' --> '%s'\n", prio, ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
 			visit_node((t_edge *)edge->content, token);
 			ft_lstpush(&q_part, ft_lstcontent(&((t_edge *)edge->content)->to->i));
 			prev[((t_edge *)edge->content)->to->i] = (t_edge *)edge->content;
@@ -219,15 +177,11 @@ t_list	**save_path_set(t_adjlist *g, t_node *start, t_node *end, int token)
 		path = q_head->content;
 		if (((t_edge *)path->content)->from->i == start->i)
 		{
-			print_path(path);
+			// print_path(path);
 			path_set[i] = path;
 			i++;
-			// printf("\n");
 		}
 		edge = g->list[((t_edge *)path->content)->from->i];
-		// e = 0;
-		// if (((t_edge *)path->content)->from->i != start->i)
-			// printf("from: '%s'\n", ((t_edge *)g->list[((t_edge *)path->content)->from->i]->content)->from->id);
 		while (edge)
 		{
 			if (!is_visited(((t_edge *)edge->content)->to, token) && ((t_edge *)edge->content)->flow == -1)
@@ -237,28 +191,13 @@ t_list	**save_path_set(t_adjlist *g, t_node *start, t_node *end, int token)
 				newpath->content_size = path->content_size + 1;
 				ft_lstpush(&q_head, ft_lstcontent(newpath));
 				if (((t_edge *)edge->content)->to->i != start->i)
-					visit_node((t_edge *)edge->content, token);
-				// e++;
-				// if (e > 1 && ((t_edge *)edge->content)->from->i != start->i)
-				// {
-					// printf("from: '%s'\n", ((t_edge *)g->list[((t_edge *)path->content)->from->i]->content)->from->id);
-					// printf("\t'%s' --> '%s'\n", ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
-				// }			
+					visit_node((t_edge *)edge->content, token);			
 			}
-			// if (e > 1 && ((t_edge *)edge->content)->from->i != start->i)
-				// printf("\n");
 			edge = edge->next;
 		}
-		// if (e > 1 && ((t_edge *)edge->content)->from->i != end->i)
-		// 	printf("\n");
-		// if (e > 1)
-		// {
-		// 	printf("'%s' --> '%s'\n", ((t_edge *)edge->content)->from->id, ((t_edge *)edge->content)->to->id);
-		// }
-		// printf("%d", e);
 		q_head = q_head->next;
 	}
-	printf("\n\n\n");
+	// printf("\n\n");
 	return (path_set);
 }
 
@@ -279,9 +218,7 @@ t_list		***bfs(t_lem_in *data, t_node *start, t_node *end)
 		collection[bfs] = save_path_set((t_adjlist *)data->g, start, end, token);
 		token++;
 		bfs++;
-		// printf("\n\n");
 	}
-	// printf("bfs: %d\n", bfs);
 	return (collection);
 }
 
