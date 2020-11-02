@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/29 16:10:02 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/02 18:44:28 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LEM_IN_H
 # include "ft_hash.h"
 # include "graph.h"
+
+# define LEAKS 0
 
 typedef struct		s_lem_in
 {
