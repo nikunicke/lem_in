@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/30 10:47:34 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/02 18:45:37 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,24 +127,24 @@ int		bfs_internal(t_adjlist *graph, t_node *start, t_node *end, int token)
 {
 	t_list	*q_head;
 	t_edge	**prev;
+	int		ret;
 
+	ret = 0;
 	prev = ft_malloctype(sizeof(t_edge *), graph->size);
 	q_head = init_queue(&start->i);
 	start->token = token;
 	while (q_head && *(int *)q_head->content != end->i)
 	{
 		start->in = 0;
-		// printf("q_head: %s\n", ((t_edge *)graph->list[(*(int *)q_head->content)]->content)->from->id);
 		ft_lstpush(&q_head, check_constraints(graph, graph->list[(*(int *)q_head->content)], prev, token));
-		q_head = q_head->next;
-		//lstpop here instead of nexting
+		ft_lstpop(&q_head);
 	}
-	if (!prev[end->i])
-		return (0);
-	augment_path(prev, end->i);
+	ft_lstdel(&q_head, NULL);
+	if (prev[end->i] && ++ret)
+		augment_path(prev, end->i);
 	free(prev);
 	prev = NULL;
-	return (1);
+	return (ret);
 }
 
 void	print_path(t_list *lst)
@@ -175,29 +175,29 @@ t_list	**save_path_set(t_adjlist *g, t_node *start, t_node *end, int token)
 	while (q_head)
 	{
 		path = q_head->content;
+		ft_lstpop(&q_head);
 		if (((t_edge *)path->content)->from->i == start->i)
 		{
-			// print_path(path);
 			path_set[i] = path;
 			i++;
+			continue;
 		}
 		edge = g->list[((t_edge *)path->content)->from->i];
 		while (edge)
 		{
 			if (!is_visited(((t_edge *)edge->content)->to, token) && ((t_edge *)edge->content)->flow == -1)
 			{
-				newpath = ft_lstclone(path, sizeof(t_edge *));
+				newpath = ft_lstclone(path);
 				ft_lstadd(&newpath, ft_lstcontent(g->list[((t_edge *)edge->content)->to->i]->content));
 				newpath->content_size = path->content_size + 1;
 				ft_lstpush(&q_head, ft_lstcontent(newpath));
 				if (((t_edge *)edge->content)->to->i != start->i)
-					visit_node((t_edge *)edge->content, token);			
+					visit_node((t_edge *)edge->content, token);
 			}
 			edge = edge->next;
 		}
-		q_head = q_head->next;
+		ft_lstdel(&path, NULL);
 	}
-	// printf("\n\n");
 	return (path_set);
 }
 

@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:15:58 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/30 14:49:51 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/02 16:32:05 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		min_cost_index(t_lem_in *data, t_list ***paths)
 		}
 		i++;
 		tmp++;
-		// printf("cost: %f\n", cost);
 	}
 	return (i_min - 1);
 }
@@ -128,7 +127,6 @@ void	output_movement(t_list **set, int flow, int ants)
 		total += ants_per_path[i];
 		i--;
 	}
-	// printf("total: %d\n", total);
 	i = flow;
 	while (total > ants)
 	{
@@ -155,6 +153,8 @@ void	output_movement(t_list **set, int flow, int ants)
 		new_flow = update_flow(ants_per_path, new_flow);
 		moving_ants += new_flow;
 	}
+	free(ant_loc);
+	free(ants_per_path);
 }
 
 // cost could represent which path set we should use at which point? How do we account for previously "sent" ants?
