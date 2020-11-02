@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:46:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/15 12:48:06 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:15:47 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct	s_parser
 {
 	t_stage		stage;
 	t_lexer		*lex;
-	t_token		*current_token;
-	t_token		*prev_token;
+	t_token		current_token;
+	t_token		prev_token;
 }				t_parser;
 
 t_parser		*init_parser(t_lexer *l);
