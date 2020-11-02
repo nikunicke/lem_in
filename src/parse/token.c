@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:24:37 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/14 13:37:07 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:07:15 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,14 @@ t_token		*init_token(t_type type, char *lit, char ope, size_t size)
 	t->ope = ope;
 	t->size = size;
 	return (t);
+}
+
+t_token		*new_token(t_type type, char *lit, char ope, size_t size)
+{
+	 return (&(t_token){
+		 .type = type,
+		 .lit = lit,
+		 .ope = ope,
+		 .size = size
+	 });
 }
