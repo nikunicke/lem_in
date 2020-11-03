@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 13:10:52 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/03 15:03:18 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "get_next_line.h"
-#include "graph.h"
+#include "ft_graph.h"
 #include <stdio.h>
 
 void	validate_data(t_lem_in data)
