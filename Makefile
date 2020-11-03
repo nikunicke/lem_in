@@ -6,7 +6,7 @@
 #    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
-#    Updated: 2020/10/22 17:20:29 by npimenof         ###   ########.fr        #
+#    Updated: 2020/11/03 14:44:35 by npimenof         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = lem-in
 FLAGS = -Wall -Werror -Wextra
 
 SRC = src/main.c src/lem_in.c\
-		src/parse/test.c src/parse/lexer.c\
-		src/parse/token.c src/parse/parser.c\
+		src/parser/parser.c src/parser/parser_helper.c\
+		src/lexer/lexer.c src/lexer/lexer_helper.c\
 		src/network_flow/bfs.c\
 		src/network_flow/costs.c
 

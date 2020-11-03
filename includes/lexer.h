@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:02:58 by npimenof          #+#    #+#             */
-/*   Updated: 2020/10/15 13:02:06 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/03 14:42:26 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ typedef struct	s_lexer
 	size_t		i;
 }				t_lexer;
 
-t_lexer			*init_lexer(char *content, size_t s);
-t_lexer			*new_lexer(char *content, size_t s);
-void			update_lexer(t_lexer *l, char *content, size_t s);
+t_lexer			new_lexer(char *content, size_t s);
 t_token			*lex_get_next_token(t_lexer *l);
 t_token			*lex_advance_token(t_lexer *l, t_token *t);
-t_token			*lex_ident(t_lexer *l);
-t_token			*lex_hash(t_lexer *l);
+t_token			*lex_skip_comment(t_lexer *l);
 void			lex_advance(t_lexer *l);
 void			lex_skip_wsp(t_lexer *l);
 

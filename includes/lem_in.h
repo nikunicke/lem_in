@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/02 18:44:28 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/03 13:11:50 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 # include "graph.h"
 
 # define LEAKS 0
+# define INPUT 0
 
 typedef struct		s_lem_in
 {
 	t_hash			*h;
 	t_graph			*g;
-	unsigned int	start;
-	unsigned int	end;
+	int				start;
+	int				end;
 	unsigned int	ants;
 }					t_lem_in;
 
