@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 17:15:58 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/02 16:32:05 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/03 11:18:22 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	output_movement(t_list **set, int flow, int ants)
 		total += ants_per_path[i];
 		i--;
 	}
-	i = flow;
+	i = flow - 1;
 	while (total > ants)
 	{
 		if (ants_per_path[i] > 0)
