@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/02 18:39:38 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/03 13:10:52 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,46 +18,54 @@
 #include "graph.h"
 #include <stdio.h>
 
-void	print_node(t_node *n, size_t s)
+void	validate_data(t_lem_in data)
 {
-	printf("%s  -  %zu\n", n->id, s);
+	if (data.ants < 1 ||
+		data.start == data.end ||
+		data.start < 0 ||
+		data.end < 0)
+	{
+		ft_putendl("Error: Insufficient data");
+		exit(1);
+	}
 }
 
-size_t	ft_hash2(t_node *n, size_t s)
+void	write_input(char *p, size_t s)
 {
-	char	*p;
-	size_t	h;
+	p[s] =  '\n';
+	write(1, p, s + 1);
+	p[s] =  '\0';
+}
 
-	p = n->id;
-	h = 0;
-	while (s-- && *p)
+void	parse(t_lem_in *data)
+{
+	char	*line;
+	size_t	s;
+	t_parser p;
+
+	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
-		h += *p;
-		h = (h * *p) % (TABLE_SIZE);
-		p++;
+		if (INPUT)
+			write_input(line, s);
+		p = new_parser(new_lexer(line, s));
+		parser_parse(&p, data);
 	}
-	return (h);
+	if (s < 0)
+	{
+		ft_putendl_fd("Failed to read", 2);
+		exit(1);
+	}
+	validate_data(*data);
 }
 
 int		main(void)
 {
 	t_lem_in	data;
-	char		*line;
-	int			flow;
-	size_t		s;
-	t_lexer		l;
-	t_parser	p;
 	t_list		***paths;
+	int			flow;
 
 	data = *init_lem_in();
-	data.h = init_hash_table(sizeof(t_list), ft_hash2);
-	while ((s = ft_get_next_line(0, &line)) > 0)
-	{
-		ft_putendl(line);
-		l = *new_lexer(line, s);
-		p = *new_parser(&l);
-		parser_parse(&p, &data);
-	}
+	parse(&data);
 	paths = edk(&data);
 	flow = min_cost_index(&data, paths);
 	output_movement(paths[flow], flow + 1, data.ants);
