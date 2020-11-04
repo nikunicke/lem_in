@@ -6,13 +6,13 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:21:31 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 13:02:49 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/04 14:26:55 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t	lemin_hash(t_node *n, size_t s)
+size_t		lemin_hash(t_node *n, size_t s)
 {
 	char	*p;
 	size_t	h;
@@ -27,7 +27,6 @@ size_t	lemin_hash(t_node *n, size_t s)
 	}
 	return (h);
 }
-
 
 t_lem_in	*init_lem_in(void)
 {

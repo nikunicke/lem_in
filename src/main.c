@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 15:03:18 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/04 14:26:19 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "parser.h"
 #include "get_next_line.h"
 #include "ft_graph.h"
+#include "edmons_karp.h"
+#include "output.h"
 #include <stdio.h>
 
 void	validate_data(t_lem_in data)
@@ -32,16 +34,16 @@ void	validate_data(t_lem_in data)
 
 void	write_input(char *p, size_t s)
 {
-	p[s] =  '\n';
+	p[s] = '\n';
 	write(1, p, s + 1);
-	p[s] =  '\0';
+	p[s] = '\0';
 }
 
 void	parse(t_lem_in *data)
 {
-	char	*line;
-	size_t	s;
-	t_parser p;
+	char		*line;
+	size_t		s;
+	t_parser	p;
 
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
@@ -52,7 +54,7 @@ void	parse(t_lem_in *data)
 	}
 	if (s < 0)
 	{
-		ft_putendl_fd("Failed to read", 2);
+		ft_putendl_fd("Error: Failed to read", 2);
 		exit(1);
 	}
 	validate_data(*data);
@@ -66,8 +68,8 @@ int		main(void)
 
 	data = *init_lem_in();
 	parse(&data);
-	paths = edk(&data);
-	flow = min_cost_index(&data, paths);
+	paths = edmons_karp(&data);
+	flow = min_cost_path(&data, paths);
 	output_movement(paths[flow], flow + 1, data.ants);
 	if (LEAKS)
 		system("leaks lem-in");
