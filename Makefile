@@ -6,7 +6,7 @@
 #    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
-#    Updated: 2020/11/03 16:52:21 by npimenof         ###   ########.fr        #
+#    Updated: 2020/11/04 14:52:31 by npimenof         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ SRC = src/main.c src/lem_in.c\
 		src/lexer/lexer.c src/lexer/lexer_helper.c\
 		src/network_flow/edge.c src/network_flow/node.c\
 		src/network_flow/path.c\
-		src/network_flow/bfs.c\
-		src/network_flow/costs.c
+		src/network_flow/edmons_karp.c\
+		src/network_flow/queue.c\
+		src/output/cost.c src/output/output.c\
+		src/output/write.c
 
 INCL = ./includes
 
