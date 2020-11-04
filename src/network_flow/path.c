@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:54:44 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 18:10:57 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/04 14:25:34 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "edmons_karp.h"
 #include <stdio.h>
 
-void	add_path_to_q(t_adjlist *g, t_list *path, t_list *edge, t_list **q_head)
+static void		advance(t_adjlist *g, t_list *path, t_list *edge, t_list **q)
 {
 	t_list	*newpath;
 
@@ -22,10 +22,10 @@ void	add_path_to_q(t_adjlist *g, t_list *path, t_list *edge, t_list **q_head)
 	ft_lstadd(&newpath,
 			ft_lstcontent(g->list[((t_edge *)edge->content)->to->i]->content));
 	newpath->content_size = path->content_size + 1;
-	ft_lstpush(q_head, ft_lstcontent(newpath));
+	ft_lstpush(q, ft_lstcontent(newpath));
 }
 
-int		edge_ok(t_list *edge, int start, int token)
+static int		edge_ok(t_list *edge, int start, int token)
 {
 	if (!is_visited(((t_edge *)edge->content)->to, token) &&
 				((t_edge *)edge->content)->flow == -1)
@@ -37,7 +37,7 @@ int		edge_ok(t_list *edge, int start, int token)
 	return (0);
 }
 
-t_list	**asd(t_list **set, t_list **path, int start)
+static t_list	**save_path(t_list **set, t_list **path, int start)
 {
 	if (!(((t_edge *)(*path)->content)->from->i == start))
 		return (set);
@@ -46,7 +46,7 @@ t_list	**asd(t_list **set, t_list **path, int start)
 	return (set);
 }
 
-t_list	**save_path_set(t_adjlist *g, t_node *start, t_node *end, int token)
+t_list			**save_path_set(t_adjlist *g, t_node *s, t_node *e, int token)
 {
 	t_list	*q_head;
 	t_list	*edge;
@@ -54,18 +54,18 @@ t_list	**save_path_set(t_adjlist *g, t_node *start, t_node *end, int token)
 	t_list	**path_set;
 
 	path_set = ft_malloctype(sizeof(t_list *), token / 2);
-	path = ft_lstcontent(g->list[end->i]->content);
+	path = ft_lstcontent(g->list[e->i]->content);
 	q_head = init_queue(path);
 	while (q_head)
 	{
 		path = q_head->content;
 		ft_lstpop(&q_head);
 		edge = g->list[((t_edge *)path->content)->from->i];
-		path_set = asd(path_set, &path, start->i);
+		path_set = save_path(path_set, &path, s->i);
 		while (edge)
 		{
-			if (edge_ok(edge, start->i, token))
-				add_path_to_q(g, path, edge, &q_head);
+			if (edge_ok(edge, s->i, token))
+				advance(g, path, edge, &q_head);
 			edge = edge->next;
 		}
 		ft_lstdel(&path, NULL);
