@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   output.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 16:40:38 by npimenof         ###   ########.fr       */
+/*   Created: 2020/11/04 12:53:42 by npimenof          #+#    #+#             */
+/*   Updated: 2020/11/04 14:51:38 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
-# include "ft_hash.h"
+#ifndef OUTPUT_H
+# define OUTPUT_H
+# include "lem_in.h"
 # include "graph.h"
 
-# define LEAKS 0
-# define INPUT 0
-# define COLOR_END 1
+char	g_uninit_token;
+# define UNINITIALIZED ((void *)&g_uninit_token)
 
-typedef struct		s_lem_in
-{
-	t_hash			*h;
-	t_graph			*g;
-	int				start;
-	int				end;
-	unsigned int	ants;
-}					t_lem_in;
-
-t_lem_in			*init_lem_in(void);
+void	write_ant_movement(int ant, t_list *location, char *room);
+int		min_cost_path(t_lem_in *data, t_list ***paths);
+void	output_movement(t_list **set, int flow, int ants);
+float	get_cost(int ants, int fow, t_list **l);
+int		min_cost_path(t_lem_in *data, t_list ***paths);
 
 #endif
