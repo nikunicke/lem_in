@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 14:26:19 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:31:43 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,19 @@ int		main(void)
 	t_lem_in	data;
 	t_list		***paths;
 	int			flow;
+	int			result;
 
 	data = *init_lem_in();
 	parse(&data);
 	paths = edmons_karp(&data);
 	flow = min_cost_path(&data, paths);
-	output_movement(paths[flow], flow + 1, data.ants);
+	result = output_movement(paths[flow], flow + 1, data.ants);
+	if (PRESULT)
+	{
+		ft_putstr("lines: ");
+		ft_putnbr(result);
+		write(1, "\n", 1);
+	}
 	if (LEAKS)
 		system("leaks lem-in");
 	return (0);

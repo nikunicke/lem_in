@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:28:21 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 16:12:26 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 11:26:18 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ float	get_cost(int ants, int flow, t_list **l)
 	i = 0;
 	cost = 0;
 	while (i < flow)
-	{
-		// printf("path%d len: %zu\n", i, l[i]->content_size);
 		cost += l[i++]->content_size;
-	}
-	// printf("\n");
 	return ((cost + ants - 1) / flow);
 }
 

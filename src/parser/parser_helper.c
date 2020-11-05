@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:23:03 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:30:13 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:48:01 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
-
-t_node			*ft_unique_node(t_list *l, void *ptr, size_t s)
-{
-	while (l)
-	{
-		if (!(ft_memcmp(((t_node *)(l->content))->id, ptr, s)))
-			return (l->content);
-		l = l->next;
-	}
-	return (NULL);
-}
 
 t_parser		new_parser(t_lexer l)
 {
