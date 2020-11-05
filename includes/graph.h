@@ -6,11 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:00:38 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 15:20:30 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:49:50 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  GRAPH_H
+#ifndef GRAPH_H
 # define GRAPH_H
 # include "ft_graph.h"
 
@@ -30,5 +30,6 @@ int		remaining_capacity(t_edge *e);
 void	visit_node(t_edge *e, int token);
 int		is_visited(t_node *node, int token);
 int		is_in(t_node *node, t_edge *e);
+t_node	*ft_unique_node(t_list *l, void *ptr, size_t s);
 
 #endif

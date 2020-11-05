@@ -6,14 +6,14 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:46:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:30:28 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:40:58 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-# include "lexer.h"
 # include "lem_in.h"
+# include "lexer.h"
 # include "ft_hash.h"
 # include "graph.h"
 

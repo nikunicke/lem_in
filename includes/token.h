@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:20:38 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:45:29 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:51:05 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ typedef enum	e_type
 	HYPH
 }				t_type;
 
-
-
-typedef struct	s_token 
+typedef struct	s_token
 {
 	t_type		type;
 	char		*lit;

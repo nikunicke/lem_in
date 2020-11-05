@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 16:40:38 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:25:10 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include "graph.h"
 
 # define LEAKS 0
-# define INPUT 0
-# define COLOR_END 1
+# define INPUT 1
+# define COLOR_END 0
+# define PRESULT 0
 
 typedef struct		s_lem_in
 {
