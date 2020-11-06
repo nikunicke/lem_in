@@ -6,7 +6,7 @@
 #    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
-#    Updated: 2020/11/06 14:41:59 by npimenof         ###   ########.fr        #
+#    Updated: 2020/11/06 14:44:04 by npimenof         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,6 @@ FT_GRAPH = ./ft_graph
 LIBFT_INCL = $(LIBFT)/includes
 FT_HASH_INCL = $(FT_HASH)/includes
 FT_GRAPH_INCL = $(FT_GRAPH)/includes
-
-# check_submodules:
-# 	@if git submodule status | egrep -q '^[-]' ; then \
-# 		echo "INFO: Initializing git submodules"; \
-# 		git submodule update --init; \
-# 	fi
 
 all: $(NAME)
 
