@@ -6,7 +6,7 @@
 #    By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/06 14:31:52 by npimenof          #+#    #+#              #
-#    Updated: 2020/11/06 14:33:52 by npimenof         ###   ########.fr        #
+#    Updated: 2020/11/06 14:36:16 by npimenof         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,9 @@ check_submodules:
 		git submodule update --init; \
 	fi
 
-all: $(NAME)
+all: check_submodules $(NAME)
 
-$(NAME): check_submodules $(SRC) $(INCL)/lem_in.h
+$(NAME): $(SRC) $(INCL)/lem_in.h
 	make -C $(LIBFT)
 	make -C $(FT_HASH)
 	make -C $(FT_GRAPH)
