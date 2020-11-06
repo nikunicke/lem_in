@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.c                                              :+:      :+:    :+:   */
+/*   edmons_karp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 12:00:43 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:09:00 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,11 @@ static t_list	***bfs(t_lem_in *data, t_node *start, t_node *end)
 											end, token);
 		token++;
 		bfs++;
+	}
+	if (!bfs)
+	{
+		ft_putendl("Error: No paths");
+		exit(1);
 	}
 	return (collection);
 }

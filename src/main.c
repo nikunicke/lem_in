@@ -6,26 +6,25 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:31:43 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:13:51 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include "ft_hash.h"
 #include "lexer.h"
 #include "parser.h"
 #include "get_next_line.h"
-#include "ft_graph.h"
 #include "edmons_karp.h"
 #include "output.h"
-#include <stdio.h>
 
 void	validate_data(t_lem_in data)
 {
-	if (data.ants < 1 ||
+	if ((data.ants < 1 || data.ants > MAX_ANTS) ||
 		data.start == data.end ||
 		data.start < 0 ||
-		data.end < 0)
+		data.end < 0 ||
+		!((t_adjlist *)data.g)->list[data.start] ||
+		!((t_adjlist *)data.g)->list[data.end])
 	{
 		ft_putendl("Error: Insufficient data");
 		exit(1);

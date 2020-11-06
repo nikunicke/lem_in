@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:21:54 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:29:35 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:14:09 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static t_node	*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
 		(*s)++;
 		return (NULL);
 	}
+	if (ft_unique_node(
+		(t_list *)t->arr[ft_hash(p->prev_token.lit, p->prev_token.size)],
+		p->prev_token.lit, p->prev_token.size))
+		return (NULL);
 	n = new_node(p->prev_token.lit);
 	parser_consume(p, NUM);
 	n->x = ft_atoi(p->prev_token.lit);
@@ -92,6 +96,7 @@ static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
 void			parser_parse(t_parser *p, t_lem_in *data)
 {
 	static t_stage		stage;
+	t_node				*n;
 
 	if (p->current_token.type)
 	{
@@ -100,8 +105,12 @@ void			parser_parse(t_parser *p, t_lem_in *data)
 		else if (stage == ANTS)
 			data->ants = parse_ants(p, &stage);
 		else if (stage == NODE)
-			ft_insert(data->h, parse_node(p, &stage, (t_graph **)&data->g,
-				data->h), sizeof(t_node));
+		{
+			if (!(n = parse_node(p, &stage, (t_graph **)&data->g, data->h)) &&
+				stage == NODE)
+				free(p->prev_token.lit);
+			ft_insert(data->h, n, sizeof(t_node));
+		}
 		else if (stage == EDGE)
 			parse_edge(p, data->g, data->h);
 	}

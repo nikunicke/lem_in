@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:25:10 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/06 12:16:38 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 # include "ft_hash.h"
 # include "graph.h"
 
-# define LEAKS 0
+# define LEAKS 1
 # define INPUT 1
-# define COLOR_END 0
+# define COLOR_END 1
 # define PRESULT 0
+# define MAX_ANTS 2000000
 
 typedef struct		s_lem_in
 {
