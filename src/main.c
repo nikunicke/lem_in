@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/06 14:13:51 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/09 17:09:05 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "get_next_line.h"
 #include "edmons_karp.h"
 #include "output.h"
+#define RED "\033[0;31m"
+#define RESET "\033[0m"
 
 void	validate_data(t_lem_in data)
 {
@@ -26,7 +28,10 @@ void	validate_data(t_lem_in data)
 		!((t_adjlist *)data.g)->list[data.start] ||
 		!((t_adjlist *)data.g)->list[data.end])
 	{
-		ft_putendl("Error: Insufficient data");
+		ft_putstr(RED);
+		ft_putstr("Error");
+		ft_putstr(RESET);
+		ft_putendl(": Insufficient data");
 		exit(1);
 	}
 }
@@ -46,9 +51,14 @@ void	parse(t_lem_in *data)
 
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
+		if (s - 1 == 0)
+		{
+			free(line);
+			continue ;
+		}
 		if (INPUT)
-			write_input(line, s);
-		p = new_parser(new_lexer(line, s));
+			write_input(line, s - 1);
+		p = new_parser(new_lexer(line, s - 1));
 		parser_parse(&p, data);
 	}
 	if (s < 0)
