@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:21:54 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 13:15:31 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:28:33 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
 		data->end = ((t_hash *)data->h)->used;
 		end++;
 	}
-	else if (command != START && command != END)
-		return ;
-	else
+	else if (!(command != START && command != END))
 	{
 		ft_putendl_fd("Error: Only 1 start and 1 end allowed", 2);
 		exit(1);
