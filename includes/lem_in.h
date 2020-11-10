@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/06 12:16:38 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 10:58:59 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 # include "ft_hash.h"
 # include "graph.h"
 
-# define LEAKS 1
+# define LEAKS 0
 # define INPUT 1
-# define COLOR_END 1
+# define COLOR_END 0
 # define PRESULT 0
 # define MAX_ANTS 2000000
 

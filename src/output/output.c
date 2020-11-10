@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:30:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 13:55:35 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 10:57:36 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "output.h"
-#include <stdio.h>
 
 static int	update_flow(int *distribution, int flow)
 {
@@ -117,6 +116,7 @@ int			output_movement(t_list **set, int flow, int ants)
 	ant_loc = ft_malloctype(sizeof(t_list *), ants);
 	moving_ants = flow;
 	steps = 0;
+	write(1, "\n", 1);
 	while (ant_loc[moving_ants - 1] != UNINITIALIZED)
 	{
 		update_location(ant_loc, set, moving_ants, flow);
@@ -124,7 +124,6 @@ int			output_movement(t_list **set, int flow, int ants)
 		moving_ants += flow;
 		steps++;
 	}
-	printf("lines: %d\n", steps);
 	free(ant_loc);
 	free(ants_per_path);
 	return (steps);
