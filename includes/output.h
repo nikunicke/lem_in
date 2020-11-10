@@ -6,14 +6,13 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 12:53:42 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:50:35 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:04:43 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OUTPUT_H
 # define OUTPUT_H
 # include "lem_in.h"
-# include "graph.h"
 
 char	g_uninit_token;
 # define UNINITIALIZED ((void *)&g_uninit_token)

@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:46:52 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:40:58 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:05:21 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PARSER_H
 # include "lem_in.h"
 # include "lexer.h"
-# include "ft_hash.h"
-# include "graph.h"
 
 typedef enum	e_command
 {

@@ -6,13 +6,12 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:59:33 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:50:17 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:04:05 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDMONS_KARP_H
 # define EDMONS_KARP_H
-# include "graph.h"
 # include "lem_in.h"
 
 t_list		***edmons_karp(t_lem_in *data);
