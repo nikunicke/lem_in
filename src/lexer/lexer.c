@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:32:13 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:46:28 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:13:08 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "token.h"
 
 void			lex_advance(t_lexer *l)
 {

@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:21:54 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/06 14:14:09 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:15:31 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "libft.h"
 
 static int		parse_ants(t_parser *p, t_stage *s)
 {

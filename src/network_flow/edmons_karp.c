@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/06 14:09:00 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:13:18 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include "graph.h"
 #include "edmons_karp.h"
 
 static int		check_prio(t_list *edge, int token, int remaining_cap)

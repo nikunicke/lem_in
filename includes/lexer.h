@@ -6,13 +6,12 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:02:58 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:51:15 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:12:40 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-# include "lem_in.h"
 # include "libft.h"
 # include "token.h"
 

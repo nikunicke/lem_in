@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:23:03 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:48:01 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:15:12 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "libft.h"
 #define RED "\033[0;31m"
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"

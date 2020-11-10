@@ -6,13 +6,12 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:54:44 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 14:25:34 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:13:28 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graph.h"
 #include "edmons_karp.h"
-#include <stdio.h>
 
 static void		advance(t_adjlist *g, t_list *path, t_list *edge, t_list **q)
 {

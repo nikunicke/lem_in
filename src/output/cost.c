@@ -6,12 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:28:21 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 11:26:18 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:13:43 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "output.h"
-#include <stdio.h>
 
 float	get_cost(int ants, int flow, t_list **l)
 {

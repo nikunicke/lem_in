@@ -6,13 +6,11 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:33:22 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/03 14:44:17 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/10 13:12:25 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "token.h"
-#include <stdio.h>
 
 t_lexer		new_lexer(char *content, size_t s)
 {
