@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/09 17:09:05 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/11 14:38:04 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	validate_data(t_lem_in data)
 		data.start == data.end ||
 		data.start < 0 ||
 		data.end < 0 ||
+		!data.g ||
 		!((t_adjlist *)data.g)->list[data.start] ||
 		!((t_adjlist *)data.g)->list[data.end])
 	{
