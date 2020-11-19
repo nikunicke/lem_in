@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 14:30:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 10:57:36 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:12:34 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,10 @@ int			output_movement(t_list **set, int flow, int ants)
 	int		moving_ants;
 	int		steps;
 
-	ants_per_path = distribute_ants(set, &flow, ants);
-	ant_loc = ft_malloctype(sizeof(t_list *), ants);
+	if (!(ants_per_path = distribute_ants(set, &flow, ants)))
+		exit(1);
+	if (!(ant_loc = ft_malloctype(sizeof(t_list *), ants)))
+		exit(1);
 	moving_ants = flow;
 	steps = 0;
 	write(1, "\n", 1);

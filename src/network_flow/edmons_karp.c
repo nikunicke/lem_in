@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 14:08:15 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 13:13:18 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:08:42 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int		bfs_internal(t_adjlist *g, t_node *s, t_node *e, int token)
 	int		ret;
 
 	ret = 0;
-	prev = ft_malloctype(sizeof(t_edge *), g->size);
+	if (!(prev = ft_malloctype(sizeof(t_edge *), g->size)))
+		return (0);
 	q_head = init_queue(&s->i);
 	s->token = token;
 	while (q_head && *(int *)q_head->content != e->i)
@@ -93,7 +94,7 @@ static t_list	***bfs(t_lem_in *data, t_node *start, t_node *end)
 
 	if (!(collection = (t_list ***)ft_malloctype(sizeof(t_list **),
 			data->ants + 1)))
-		return (0);
+		return (NULL);
 	token = 1;
 	bfs = 0;
 	while (bfs < data->ants &&
@@ -118,6 +119,8 @@ t_list			***edmons_karp(t_lem_in *data)
 	t_node	*s;
 	t_node	*e;
 
+	if (!data || !data->g)
+		return (NULL);
 	s = ((t_edge *)((t_adjlist *)data->g)->list[data->start]->content)->from;
 	e = ((t_edge *)((t_adjlist *)data->g)->list[data->end]->content)->from;
 	return (bfs(data, s, e));

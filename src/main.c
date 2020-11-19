@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/11 14:38:04 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:05:19 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int		main(void)
 
 	data = *init_lem_in();
 	parse(&data);
-	paths = edmons_karp(&data);
+	if (!(paths = edmons_karp(&data)))
+		return (1);
 	flow = min_cost_path(&data, paths);
 	result = output_movement(paths[flow], flow + 1, data.ants);
 	if (PRESULT)
