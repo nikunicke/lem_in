@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:21:31 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/04 14:26:55 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:59:37 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ size_t		lemin_hash(t_node *n, size_t s)
 	return (h);
 }
 
-t_lem_in	*init_lem_in(void)
+t_lem_in	init_lem_in(void)
 {
-	return (&(t_lem_in){
+	return ((t_lem_in){
 		.h = init_hash_table(sizeof(t_list), lemin_hash),
 		.g = 0,
 		.start = -1,

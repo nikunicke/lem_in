@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:21:54 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 13:28:33 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:58:13 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		parse_ants(t_parser *p, t_stage *s)
 	n = ft_atoi(p->prev_token.lit);
 	parser_consume(p, NWL);
 	(*s)++;
-	free(p->lex->ch - p->lex->s);
+	free(p->lex.ch - p->lex.s);
 	return (n);
 }
 
@@ -74,6 +74,7 @@ static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
 	command = parser_get_command(p, stage);
 	if (!start && command == START)
 	{
+		ft_putnbr(((t_hash *)data->h)->used);
 		data->start = ((t_hash *)data->h)->used;
 		start++;
 	}
@@ -87,7 +88,7 @@ static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
 		ft_putendl_fd("Error: Only 1 start and 1 end allowed", 2);
 		exit(1);
 	}
-	free(p->lex->ch - p->lex->s);
+	free(p->lex.ch - p->lex.s);
 }
 
 void			parser_parse(t_parser *p, t_lem_in *data)

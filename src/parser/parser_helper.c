@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:23:03 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/19 10:40:33 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:49:18 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
-t_parser		new_parser(t_lexer l)
+t_parser		new_parser(t_lexer *l)
 {
 	t_token	t;
 
-	t = *lex_get_next_token(&l);
+	t = lex_get_next_token(l);
 	return ((t_parser){.stage = 0,
-						.lex = &l,
+						.lex = *l,
 						.current_token = t,
 						.prev_token = t});
 }
@@ -54,7 +54,7 @@ void			parser_consume(t_parser *p, t_type type)
 	if (p->current_token.type == type)
 	{
 		p->prev_token = p->current_token;
-		p->current_token = *lex_get_next_token(p->lex);
+		p->current_token = lex_get_next_token(&(p->lex));
 	}
 	else
 		error_out(p->current_token.lit, p->current_token.type, type);
@@ -89,5 +89,5 @@ void			parser_edge_helper(t_parser *p, t_graph *g, t_hash *t)
 						p->prev_token.size);
 	add_edge(g, s, d);
 	parser_consume(p, NWL);
-	free(p->lex->ch - p->lex->s);
+	free(p->lex.ch - p->lex.s);
 }

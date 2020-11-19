@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:12:29 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/19 11:07:59 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:20:10 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "ft_hash.h"
 # include "graph.h"
 
-# define LEAKS 0
+# define LEAKS 1
 # define INPUT 1
 # define COLOR_END 0
 # define PRESULT 0
@@ -30,6 +30,6 @@ typedef struct		s_lem_in
 	unsigned int	ants;
 }					t_lem_in;
 
-t_lem_in			*init_lem_in(void);
+t_lem_in			init_lem_in(void);
 
 #endif

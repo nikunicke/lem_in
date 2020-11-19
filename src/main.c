@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/18 11:05:19 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 17:21:53 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	parse(t_lem_in *data)
 	char		*line;
 	size_t		s;
 	t_parser	p;
+	t_lexer		l;
 
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
@@ -59,7 +60,8 @@ void	parse(t_lem_in *data)
 		}
 		if (INPUT)
 			write_input(line, s - 1);
-		p = new_parser(new_lexer(line, s - 1));
+		l = new_lexer(line, s - 1);
+		p = new_parser(&l);
 		parser_parse(&p, data);
 	}
 	if (s < 0)
@@ -77,7 +79,7 @@ int		main(void)
 	int			flow;
 	int			result;
 
-	data = *init_lem_in();
+	data = init_lem_in();
 	parse(&data);
 	if (!(paths = edmons_karp(&data)))
 		return (1);
@@ -91,5 +93,6 @@ int		main(void)
 	}
 	if (LEAKS)
 		system("leaks lem-in");
+	exit(0);
 	return (0);
 }

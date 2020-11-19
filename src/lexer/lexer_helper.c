@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:33:22 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 13:12:25 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:51:52 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_lexer		new_lexer(char *content, size_t s)
 	});
 }
 
-t_token		*new_token(t_type type, char *lit, char ope, size_t size)
+t_token		new_token(t_type type, char *lit, char ope, size_t size)
 {
-	return (&(t_token){
+	return ((t_token){
 		.type = type,
 		.lit = lit,
 		.ope = ope,
@@ -37,13 +37,13 @@ void		lex_skip_wsp(t_lexer *l)
 		lex_advance(l);
 }
 
-t_token		*lex_skip_comment(t_lexer *l)
+t_token		lex_skip_comment(t_lexer *l)
 {
-	free(l->ch);
+	free(l->ch - l->i);
 	return (new_token(NWL, 0, 0, 0));
 }
 
-t_token		*lex_advance_token(t_lexer *l, t_token *t)
+t_token		lex_advance_token(t_lexer *l, t_token t)
 {
 	lex_advance(l);
 	return (t);

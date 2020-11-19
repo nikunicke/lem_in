@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:32:13 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/10 13:13:08 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:51:27 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			lex_advance(t_lexer *l)
 	}
 }
 
-static t_token	*lex_ident(t_lexer *l)
+static t_token	lex_ident(t_lexer *l)
 {
 	char	*id;
 	size_t	i;
@@ -46,7 +46,7 @@ static t_token	*lex_ident(t_lexer *l)
 	return (new_token(IDENT, id, 0, i));
 }
 
-static t_token	*lex_hash(t_lexer *l)
+static t_token	lex_hash(t_lexer *l)
 {
 	char	*lit;
 	size_t	i;
@@ -58,10 +58,8 @@ static t_token	*lex_hash(t_lexer *l)
 	return (new_token(COMMAND, lit, 0, i));
 }
 
-t_token			*lex_get_next_token(t_lexer *l)
+t_token			lex_get_next_token(t_lexer *l)
 {
-	t_token	t;
-
 	while (l->i < l->s)
 	{
 		lex_skip_wsp(l);

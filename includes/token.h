@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:20:38 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/05 14:51:05 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:50:55 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ typedef struct	s_token
 	size_t		size;
 }				t_token;
 
-t_token			*new_token(t_type type, char *lit, char ope, size_t size);
+t_token			new_token(t_type type, char *lit, char ope, size_t size);
 
 #endif
