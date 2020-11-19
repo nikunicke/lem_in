@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:33:22 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/19 15:51:52 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 18:24:03 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,16 @@ t_token		new_token(t_type type, char *lit, char ope, size_t size)
 	});
 }
 
-void		lex_skip_wsp(t_lexer *l)
+int		lex_skip_wsp(t_lexer *l)
 {
 	while (ft_iswhitespace(*(l->ch)))
 		lex_advance(l);
+	if (!*l->ch)
+	{
+		free(l->ch - l->i);
+		return (1);
+	}
+	return (0);
 }
 
 t_token		lex_skip_comment(t_lexer *l)

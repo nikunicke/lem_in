@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 13:32:45 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/19 17:21:53 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 18:05:40 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "output.h"
 #define RED "\033[0;31m"
 #define RESET "\033[0m"
+
+#include <stdio.h>
 
 void	validate_data(t_lem_in data)
 {

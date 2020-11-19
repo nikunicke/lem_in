@@ -6,7 +6,7 @@
 /*   By: npimenof <npimenof@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 14:32:13 by npimenof          #+#    #+#             */
-/*   Updated: 2020/11/19 15:51:27 by npimenof         ###   ########.fr       */
+/*   Updated: 2020/11/19 18:24:47 by npimenof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ t_token			lex_get_next_token(t_lexer *l)
 {
 	while (l->i < l->s)
 	{
-		lex_skip_wsp(l);
+		if (lex_skip_wsp(l))
+			break ;
 		if (*(l->ch) == '#')
 		{
 			if (*(l->ch + 1) == '#')
