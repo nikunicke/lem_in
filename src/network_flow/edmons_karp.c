@@ -88,9 +88,9 @@ static int		bfs_internal(t_adjlist *g, t_node *s, t_node *e, int token)
 
 static t_list	***bfs(t_lem_in *data, t_node *start, t_node *end)
 {
-	int		bfs;
-	int		token;
-	t_list	***collection;
+	unsigned int	bfs;
+	int				token;
+	t_list			***collection;
 
 	if (!(collection = (t_list ***)ft_malloctype(sizeof(t_list **),
 			data->ants + 1)))

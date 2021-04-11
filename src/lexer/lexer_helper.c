@@ -16,6 +16,7 @@ t_lexer		new_lexer(char *content, size_t s)
 {
 	return ((t_lexer){
 		.ch = content,
+		.start = content,
 		.s = s,
 		.i = 0
 	});
@@ -37,7 +38,8 @@ int		lex_skip_wsp(t_lexer *l)
 		lex_advance(l);
 	if (!*l->ch)
 	{
-		free(l->ch - l->i);
+		free(l->start);
+		l->start = NULL;
 		return (1);
 	}
 	return (0);
@@ -45,7 +47,7 @@ int		lex_skip_wsp(t_lexer *l)
 
 t_token		lex_skip_comment(t_lexer *l)
 {
-	free(l->ch - l->i);
+	free(l->start);
 	return (new_token(NWL, 0, 0, 0));
 }
 

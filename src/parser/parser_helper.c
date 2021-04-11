@@ -60,7 +60,7 @@ void			parser_consume(t_parser *p, t_type type)
 		error_out(p->current_token.lit, p->current_token.type, type);
 }
 
-t_command		parser_get_command(t_parser *p, t_stage *s)
+t_command		parser_get_command(t_parser *p)
 {
 	parser_consume(p, COMMAND);
 	if (!ft_strcmp(p->prev_token.lit, "##start"))
@@ -89,5 +89,6 @@ void			parser_edge_helper(t_parser *p, t_graph *g, t_hash *t)
 						p->prev_token.size);
 	add_edge(g, s, d);
 	parser_consume(p, NWL);
-	free(p->lex.ch - p->lex.s);
+	free(p->lex.start);
+	p->lex.start = NULL;
 }

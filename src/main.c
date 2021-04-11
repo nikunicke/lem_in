@@ -19,8 +19,6 @@
 #define RED "\033[0;31m"
 #define RESET "\033[0m"
 
-#include <stdio.h>
-
 void	validate_data(t_lem_in data)
 {
 	if ((data.ants < 1 || data.ants > MAX_ANTS) ||
@@ -39,29 +37,23 @@ void	validate_data(t_lem_in data)
 	}
 }
 
-void	write_input(char *p, size_t s)
-{
-	p[s] = '\n';
-	write(1, p, s + 1);
-	p[s] = '\0';
-}
 
 void	parse(t_lem_in *data)
 {
 	char		*line;
-	size_t		s;
+	int			s;
 	t_parser	p;
 	t_lexer		l;
 
 	while ((s = ft_get_next_line(0, &line)) > 0)
 	{
-		if (s - 1 == 0)
+		if (s - 1 <= 0)
 		{
 			free(line);
 			continue ;
 		}
 		if (INPUT)
-			write_input(line, s - 1);
+			ft_putendl(line);
 		l = new_lexer(line, s - 1);
 		p = new_parser(&l);
 		parser_parse(&p, data);

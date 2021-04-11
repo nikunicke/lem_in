@@ -20,7 +20,7 @@ static int		parse_ants(t_parser *p, t_stage *s)
 	n = ft_atoi(p->prev_token.lit);
 	parser_consume(p, NWL);
 	(*s)++;
-	free(p->lex.ch - p->lex.s);
+	free(p->lex.start);
 	return (n);
 }
 
@@ -43,21 +43,18 @@ static t_node	*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
 		(t_list *)t->arr[ft_hash(p->prev_token.lit, p->prev_token.size)],
 		p->prev_token.lit, p->prev_token.size))
 		return (NULL);
-	n = new_node(p->prev_token.lit);
+	n = new_node(ft_strdup(p->prev_token.lit));
 	parser_consume(p, NUM);
 	n->x = ft_atoi(p->prev_token.lit);
 	parser_consume(p, NUM);
 	n->y = ft_atoi(p->prev_token.lit);
 	parser_consume(p, NWL);
+	free(p->lex.start);
 	return (n);
 }
 
 static void		parse_edge(t_parser *p, t_graph *g, t_hash *t)
 {
-	t_node	*s;
-	t_node	*d;
-	size_t	i;
-
 	if (p->current_token.type == NUM)
 		parser_consume(p, NUM);
 	else
@@ -65,16 +62,15 @@ static void		parse_edge(t_parser *p, t_graph *g, t_hash *t)
 	parser_edge_helper(p, g, t);
 }
 
-static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
+static void		parse_command(t_parser *p, t_lem_in *data)
 {
 	t_command			command;
 	static t_command	start;
 	static t_command	end;
 
-	command = parser_get_command(p, stage);
+	command = parser_get_command(p);
 	if (!start && command == START)
 	{
-		ft_putnbr(((t_hash *)data->h)->used);
 		data->start = ((t_hash *)data->h)->used;
 		start++;
 	}
@@ -88,7 +84,8 @@ static void		parse_command(t_parser *p, t_lem_in *data, t_stage *stage)
 		ft_putendl_fd("Error: Only 1 start and 1 end allowed", 2);
 		exit(1);
 	}
-	free(p->lex.ch - p->lex.s);
+	free(p->lex.start);
+	p->lex.start = NULL;
 }
 
 void			parser_parse(t_parser *p, t_lem_in *data)
@@ -99,14 +96,17 @@ void			parser_parse(t_parser *p, t_lem_in *data)
 	if (p->current_token.type)
 	{
 		if (p->current_token.type == COMMAND)
-			parse_command(p, data, &stage);
+			parse_command(p, data);
 		else if (stage == ANTS)
 			data->ants = parse_ants(p, &stage);
 		else if (stage == NODE)
 		{
 			if (!(n = parse_node(p, &stage, (t_graph **)&data->g, data->h)) &&
 				stage == NODE)
+			{
 				free(p->prev_token.lit);
+				p->prev_token.lit = NULL;
+			}
 			ft_insert(data->h, n, sizeof(t_node));
 		}
 		else if (stage == EDGE)
