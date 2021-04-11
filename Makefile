@@ -43,7 +43,7 @@ $(NAME): $(SRC) $(INCL)/lem_in.h
 	make -C $(LIBFT)
 	make -C $(FT_HASH)
 	make -C $(FT_GRAPH)
-	gcc $(FlAGS) -o $(NAME) $(SRC) -I$(INCL) \
+	gcc -g $(FLAGS) -o $(NAME) $(SRC) -I$(INCL) \
 	-L$(LIBFT) -lft -I$(LIBFT_INCL) \
 	-L$(FT_HASH) -lhashft -I$(FT_HASH_INCL) \
 	-L$(FT_GRAPH) -lgraph -I$(FT_GRAPH_INCL) \
