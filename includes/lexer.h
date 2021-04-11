@@ -18,6 +18,7 @@
 typedef struct	s_lexer
 {
 	char		*ch;
+	char		*start;
 	size_t		s;
 	size_t		i;
 }				t_lexer;

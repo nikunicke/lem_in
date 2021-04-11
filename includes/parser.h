@@ -41,6 +41,6 @@ t_parser		new_parser(t_lexer *l);
 void			parser_parse(t_parser *p, t_lem_in *data);
 void			parser_consume(t_parser *p, t_type type);
 void			parser_edge_helper(t_parser *p, t_graph *g, t_hash *t);
-t_command		parser_get_command(t_parser *p, t_stage *s);
+t_command		parser_get_command(t_parser *p);
 
 #endif
