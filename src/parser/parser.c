@@ -34,7 +34,7 @@ static t_node	*parse_node(t_parser *p, t_stage *s, t_graph **g, t_hash *t)
 		parser_consume(p, IDENT);
 	if (p->current_token.type == HYPH)
 	{
-		*g = init_graph(t->used);
+		*g = init_graph(t->used + 4);
 		parser_edge_helper(p, *g, t);
 		(*s)++;
 		return (NULL);
