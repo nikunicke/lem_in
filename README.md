@@ -17,6 +17,9 @@ make re         # make lem-in, ignoring if files have changed or not
 ```
 
 ## Performance
+**Tested on MacBook Pro i9 16GB**
+
+These results probably better on an iMac at school 🤪
 ### With output
 
 map|~timeframe(s)
