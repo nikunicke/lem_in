@@ -1,6 +1,6 @@
 # Lem-In
 
-Lem-in is an algorithmic project that requires us to find the maximum flow in a graph with both edge **and** vertex capacities. In addition to finding the maximum flow, a set number of elements should be sent trough the graph using the paths found while figuring out the maximum flow.
+Lem-in is an algorithmic project that requires us to find the maximum flow in a graph with both edge **and** vertex capacities. In addition to finding the maximum flow, a number of elements should be sent trough the graph using the paths found while figuring out the maximum flow.
 
 ## Usage
 - Makefile rules:
