@@ -29,7 +29,7 @@ map|~timeframe(s)
 -|-
 big-superposition|0.05 - 0.30
 
-Were not really interested in other types of maps here. The generated superposition maps vary quite a bit in size and the number of ants. On this scale, most of the time is going to write operations (especially printing the result). The maximum flow algorithm is O(|V||E|^2).
+We are not really interested in other types of maps here. The generated superposition maps vary quite a bit in size and the number of ants. On this scale, most of the time is going to write operations (especially printing the result). The maximum flow algorithm is O(|V||E|^2).
 
 ## Implementation
 The graph is represented by an adjacency list structure where each specific key represent some room. The keys (indexes) are hashed, meaning lookup of a room is instant (considering we do not have hash collisions). The value that the key is pointing to is a list with edges sourcing from the key (room).
